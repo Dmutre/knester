@@ -1,73 +1,83 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+Here’s an improved English version of your `README.md` for the Knester project:
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Knester
 
-## Description
+**Knester** is a NestJS web application for database management using _Knex.js_. This project is configured to work with PostgreSQL (pg) by default, but you can switch to other databases by updating environment variables and configurations in the _knexfile.js_ file.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Requirements
 
-## Installation
+- **pnpm** (for package management)
+- **Node.js** version 14 or higher
+- A properly configured `.env` file with your database connection details
+
+## Setup and Launch
+
+### 1. Install Dependencies
+
+Run the following command to install all required packages:
 
 ```bash
-$ pnpm install
+pnpm install
 ```
 
-## Running the app
+### 2. Configure the `.env` File
+
+Create a `.env` file from the provided sample:
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+cp .env.sample .env
 ```
 
-## Test
+Update the `.env` file with your environment variables, particularly `DATABASE_URL` or individual database connection details.
+
+### 3. Run Initial Migrations
+
+Run the initial migrations to set up all necessary tables in the database:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm knex migrate:latest
 ```
 
-## Support
+> **Note:** Ensure that the `uuid-ossp` extension is enabled in your PostgreSQL database to support the `uuid_generate_v4()` function. If it’s not enabled, you can add it with:
+> ```sql
+> CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+> ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 4. Launch the Application
 
-## Stay in touch
+Start the application in development mode:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+pnpm start:dev
+```
 
-## License
+The application should now be running at `http://localhost:<PORT>`, where `<PORT>` is the port specified in your `.env` file (default is `3000`).
 
-Nest is [MIT licensed](LICENSE).
+## Switching Databases
+
+Knester is set up to use PostgreSQL by default. If you want to use another database, update the environment variables in `.env` and modify the connection configuration in _knexfile.js_ to fit your desired database. Refer to the official [Knex.js documentation](http://knexjs.org/) for connection settings specific to your database.
+
+## Migration Commands
+
+Use the following commands to manage your database schema with Knex:
+
+- **Run all migrations**:
+  ```bash
+  pnpm knex migrate:latest
+  ```
+
+- **Rollback the latest migration**:
+  ```bash
+  pnpm knex migrate:rollback
+  ```
+
+- **Create a new migration file**:
+  ```bash
+  pnpm knex migrate:make <migration_name>
+  ```
+
+## Additional Information
+
+For more details on using Knex.js and its capabilities, refer to the official [Knex.js documentation](http://knexjs.org/). For NestJS documentation, visit [NestJS](https://docs.nestjs.com/).
